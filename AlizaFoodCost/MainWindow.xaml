@@ -6,12 +6,8 @@
         xmlns:local="clr-namespace:AlizaFoodCost"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Background="White" FlowDirection="RightToLeft" Height="720" Width="1280">
+        Background="White" Title="Aliza Food Cost Calculator" FlowDirection="RightToLeft" Height="720" Width="1280">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="80"/>
             <RowDefinition Height="*"/>
@@ -23,7 +19,7 @@
                     <materialDesign:PackIcon Height="75" Width="75" Kind="FoodItalian"/>
                 </Button>
                 <Canvas Width="75"></Canvas>
-                <Button Height="75"  Width="75" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" Margin="0,2">
+                <Button Height="75" Click="Btn_Ingridients_Click" Width="75" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" Margin="0,2">
                     <materialDesign:PackIcon Height="75" Width="75" Kind="ShoppingCart"/>
                 </Button>
             </StackPanel>
@@ -38,6 +34,32 @@
                 </Button>
                 <Canvas Width="25"></Canvas>
             </StackPanel>
+        </Grid>
+        <Grid Visibility="Hidden" x:Name="Grid_Ingridients_Menu" HorizontalAlignment="Left" Height="361" Margin="128,112,0,0" Grid.Row="1" VerticalAlignment="Top" Width="1015" Grid.ColumnSpan="2">
+            <Button FontSize="18" x:Name="Btn_New_Ingridient" Click="Btn_New_Ingridient_Click" Height="75" Width="175" Background="#008943" Foreground="White" BorderBrush="{x:Null}" Margin="159,136,681,150">
+                הוסף חומר גלם חדש
+            </Button>
+            <Button FontSize="18" x:Name="Btn_Edit_Ingridient" Click="Btn_Edit_Ingridient_Click" Height="75" Width="175" Background="#008943" Foreground="White" BorderBrush="{x:Null}" Margin="679,136,161,150">
+                ערוך חומר גלם קיים
+            </Button>
+        </Grid>
+        <Grid Visibility="Visible" x:Name="Grid_New_Update_Ingridient" HorizontalAlignment="Left" Height="500" Width="895" Margin="229,56,0,54.4" Grid.Row="1">
+            <Label Height="40" FontSize="20" Margin="10,0,779,460">שם המוצר:</Label>
+            <TextBox FontSize="25" BorderBrush="ForestGreen" Height="40" x:Name="New_Ingridient_Name" Margin="10,40,668,420"/>
+            <Label Height="40" Width="60" FontSize="20" Margin="10,98,825,362">מחיר:</Label>
+            <TextBox FontSize="25" BorderBrush="ForestGreen" Height="40" x:Name="New_Ingridient_Price" Margin="10,138,669,322"/>
+            <Label Height="40" FontSize="20" Margin="10,197,777,263">יחידת מידה:</Label>
+            <ComboBox FontSize="25" BorderBrush="ForestGreen" Height="40" x:Name="New_Ingridient_M_Unit" Margin="10,237,668,223">
+                <ComboBoxItem>גרם</ComboBoxItem>
+                <ComboBoxItem>100 גרם</ComboBoxItem>
+                <ComboBoxItem>קילו</ComboBoxItem>
+                <ComboBoxItem>יחידה</ComboBoxItem>
+                <ComboBoxItem>מילי-ליטר</ComboBoxItem>
+                <ComboBoxItem>ליטר</ComboBoxItem>
+            </ComboBox>
+            <Button Click="Btn_Upload_Click" FontSize="13" Foreground="White" Background="ForestGreen" HorizontalAlignment="Left" Margin="14,326,0,0" VerticalAlignment="Top" Height="33" Width="106">
+                העלאת תמונה
+            </Button>
         </Grid>
     </Grid>
 </Window>

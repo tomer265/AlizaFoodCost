@@ -1,0 +1,43 @@
+﻿<Window x:Class="AlizaFoodCost.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AlizaFoodCost"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Background="White" FlowDirection="RightToLeft" Height="720" Width="1280">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.ColumnSpan="2" Background="#008943">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <Canvas Width="25"></Canvas>
+                <Button Height="75" Width="75" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}">
+                    <materialDesign:PackIcon Height="75" Width="75" Kind="FoodItalian"/>
+                </Button>
+                <Canvas Width="75"></Canvas>
+                <Button Height="75"  Width="75" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" Margin="0,2">
+                    <materialDesign:PackIcon Height="75" Width="75" Kind="ShoppingCart"/>
+                </Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock Foreground="White" Margin="15" FontSize="25">
+                    מחשבון עלות מזון - עליזה אוכל מוכן בע"מ
+                </TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="Btn_Exit" Click="Btn_Exit_Click" Height="75" Width="75" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}">
+                    <materialDesign:PackIcon Height="75" Width="75" Kind="ExitToApp"/>
+                </Button>
+                <Canvas Width="25"></Canvas>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

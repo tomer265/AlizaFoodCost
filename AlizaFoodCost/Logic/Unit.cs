@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AlizaFoodCost.Models
+namespace AlizaFoodCost.Logic
 {
     public enum MeasurmentUnit
     {

@@ -45,11 +45,11 @@
         </Grid>
         <Grid Visibility="Visible" x:Name="Grid_New_Update_Ingridient" HorizontalAlignment="Left" Height="500" Width="895" Margin="229,56,0,54.4" Grid.Row="1">
             <Label Height="40" FontSize="20" Margin="10,0,779,460">שם המוצר:</Label>
-            <TextBox FontSize="25" BorderBrush="ForestGreen" Height="40" x:Name="New_Ingridient_Name" Margin="10,40,668,420"/>
+            <TextBox FontSize="25" BorderBrush="ForestGreen" Height="40" x:Name="Tb_New_Ingridient_Name" Margin="10,40,668,420"/>
             <Label Height="40" Width="60" FontSize="20" Margin="10,98,825,362">מחיר:</Label>
-            <TextBox FontSize="25" BorderBrush="ForestGreen" Height="40" x:Name="New_Ingridient_Price" Margin="10,138,669,322"/>
+            <TextBox FontSize="25" BorderBrush="ForestGreen" Height="40" x:Name="Tb_New_Ingridient_Price" Margin="10,138,669,322"/>
             <Label Height="40" FontSize="20" Margin="10,197,777,263">יחידת מידה:</Label>
-            <ComboBox FontSize="25" BorderBrush="ForestGreen" Height="40" x:Name="New_Ingridient_M_Unit" Margin="10,237,668,223">
+            <ComboBox FontSize="25" BorderBrush="ForestGreen" Height="40" x:Name="Select_New_Ingridient_M_Unit" Margin="10,237,668,223">
                 <ComboBoxItem>גרם</ComboBoxItem>
                 <ComboBoxItem>100 גרם</ComboBoxItem>
                 <ComboBoxItem>קילו</ComboBoxItem>
@@ -60,6 +60,7 @@
             <Button Click="Btn_Upload_Click" FontSize="13" Foreground="White" Background="ForestGreen" HorizontalAlignment="Left" Margin="14,326,0,0" VerticalAlignment="Top" Height="33" Width="106">
                 העלאת תמונה
             </Button>
+            <Button Click="Btn_Add_New_Ingridient_Click"></Button>
         </Grid>
     </Grid>
 </Window>

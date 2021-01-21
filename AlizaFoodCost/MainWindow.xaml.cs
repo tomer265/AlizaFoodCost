@@ -1,4 +1,6 @@
-﻿using Microsoft.Win32;
+﻿using AlizaFoodCost.Logic;
+using AlizaFoodCost.Models;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,6 +60,18 @@ namespace AlizaFoodCost
         private void Btn_Ingridients_Click(object sender, RoutedEventArgs e)
         {
             this.Grid_Ingridients_Menu.Visibility = Visibility.Visible;
+        }
+
+        private void Btn_Add_New_Ingridient_Click(object sender, RoutedEventArgs e)
+        {
+            Ingridient newIngridient = new Ingridient()
+            {
+                Name = this.Tb_New_Ingridient_Name.Text,
+                ImagePath = selectedFilePath,
+                MeasurmentUnit = (MeasurmentUnit)Select_New_Ingridient_M_Unit.SelectedIndex,
+                Price = decimal.Parse(Tb_New_Ingridient_Price.Text),
+                UpsertDate = DateTime.Now
+            };
         }
     }
 }

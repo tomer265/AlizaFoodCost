@@ -60,7 +60,7 @@
             <Button Click="Btn_Upload_Click" FontSize="13" Foreground="White" Background="ForestGreen" HorizontalAlignment="Left" Margin="14,326,0,0" VerticalAlignment="Top" Height="33" Width="106">
                 העלאת תמונה
             </Button>
-            <Button Click="Btn_Add_New_Ingridient_Click"></Button>
+            <Button Click="Btn_Add_New_Ingridient_Click" FontSize="13" Foreground="White" Background="ForestGreen" Margin="88,404,711,62">הוספת מוצר +</Button>
         </Grid>
     </Grid>
 </Window>

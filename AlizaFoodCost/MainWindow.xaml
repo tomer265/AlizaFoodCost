@@ -43,7 +43,7 @@
                 ערוך חומר גלם קיים
             </Button>
         </Grid>
-        <Grid Visibility="Visible" x:Name="Grid_New_Update_Ingridient" HorizontalAlignment="Left" Height="500" Width="895" Margin="229,56,0,54.4" Grid.Row="1">
+        <Grid Visibility="Hidden" x:Name="Grid_New_Ingridient" HorizontalAlignment="Left" Height="500" Width="895" Margin="229,56,0,54.4" Grid.Row="1">
             <Label Height="40" FontSize="20" Margin="10,0,779,460">שם המוצר:</Label>
             <TextBox FontSize="25" BorderBrush="ForestGreen" Height="40" x:Name="Tb_New_Ingridient_Name" Margin="10,40,668,420"/>
             <Label Height="40" Width="60" FontSize="20" Margin="10,98,825,362">מחיר:</Label>
@@ -61,6 +61,14 @@
                 העלאת תמונה
             </Button>
             <Button Click="Btn_Add_New_Ingridient_Click" FontSize="13" Foreground="White" Background="ForestGreen" Margin="88,404,711,62">הוספת מוצר +</Button>
+             <Image x:Name="Img_New_Product" Margin="404,59,191,141" Height="300" HorizontalAlignment="Center" Width="300"/>
+        </Grid>
+        <Grid x:Name="Grid_Update_Existing_Ingridient" Visibility="Visible" HorizontalAlignment="Left" Height="500" Width="895" Margin="229,56,0,54.4" Grid.Row="1">
+            <Label Height="40" FontSize="20" Margin="10,10,777,450">בחר רכיב</Label>
+            <ComboBox SelectionChanged="Cb_Update_Ingridients_Selected" x:Name="Cb_Update_Ingridients" FontSize="25" BorderBrush="ForestGreen" Height="40" Margin="10,50,697,411">
+                
+            </ComboBox>
+            <Image x:Name="Image_Selected_Ingridient" Height="300" Width="300" Margin="203,24,392,176"></Image>
         </Grid>
     </Grid>
 </Window>

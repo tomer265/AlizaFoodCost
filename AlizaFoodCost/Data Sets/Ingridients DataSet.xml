@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfIngridient xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Ingridient>
+    <Id>1</Id>
+    <Name>מלפפון ירוק</Name>
+    <ImagePath>../../Images/Ingridients/cucumber.jpg</ImagePath>
+    <Price>6.9</Price>
+    <MeasurmentUnit>Kilo</MeasurmentUnit>
+    <UpsertDate>2021-01-21T23:20:46.6968812+02:00</UpsertDate>
+  </Ingridient>
+</ArrayOfIngridient>

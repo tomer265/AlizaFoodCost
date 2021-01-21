@@ -14,35 +14,83 @@ namespace AlizaFoodCost.Logic
     {
         private const string IngridientsXmlFilePath = "../../Data Sets/Ingridients DataSet.xml";
         private const string DataSetFolderPath = "../../Data Sets";
-        public static void CheckCreateIngridientsXml()
+        private const string ImagesFolderPath = "../../Images";
+        public static void CreateUpdateIngridientsXml<T>(Type dataType, T newItem)
         {
-            CheckCreateDatasetDirectory();
+            CheckCreateDatasetDirectories();
 
-            CheckCreateDatasetFile<List<Ingridient>>(IngridientsXmlFilePath, typeof(List<Ingridient>));
+            if (dataType == typeof(Ingridient))
+            {
+                List<Ingridient> ingridientsList = new List<Ingridient>();
+                bool isFileExists = CheckIfDatasetFileExists(IngridientsXmlFilePath);
+                if (isFileExists)
+                {
+                    ingridientsList = GetDataFromFile<List<Ingridient>>(IngridientsXmlFilePath);
+                }
+                (newItem as Ingridient).Id = ingridientsList.Count + 1;
+                ingridientsList.Add(newItem as Ingridient);
+                FileInfo fi = new FileInfo((newItem as Ingridient).ImagePath);
+                string imageName = fi.Name;
+                string imagesFolderPath = CheckCreateSpecificImagesDirectory("Ingridients");
+                File.Copy((newItem as Ingridient).ImagePath, $"{imagesFolderPath}\\{imageName}");
+                (newItem as Ingridient).ImagePath = Path.Combine(imagesFolderPath, imageName);
+                CreateUpdateFile<List<Ingridient>>(IngridientsXmlFilePath, ingridientsList);
+            }
 
         }
 
-        private static void CheckCreateDatasetDirectory()
+        public static List<Ingridient> GetIngridientsList()
         {
-            if (!Directory.Exists(IngridientsXmlFilePath))
+            return GetDataFromFile<List<Ingridient>>(IngridientsXmlFilePath);
+        }
+
+        private static void CheckCreateDatasetDirectories()
+        {
+            if (!Directory.Exists(DataSetFolderPath))
             {
                 Directory.CreateDirectory(DataSetFolderPath);
             }
+
+            if (!Directory.Exists(ImagesFolderPath))
+            {
+                Directory.CreateDirectory(ImagesFolderPath);
+            }
         }
 
-        private static void CreateFile<T>(string filePath, T data)
+        private static string CheckCreateSpecificImagesDirectory(string folderName)
+        {
+            string fullPath = $@"{ImagesFolderPath}/{folderName}";
+            if (!Directory.Exists(fullPath))
+            {
+                Directory.CreateDirectory(fullPath);
+            }
+            return fullPath;
+        }
+
+
+        private static T GetDataFromFile<T>(string filePath)
+        {
+            using (StreamReader sr = new StreamReader(filePath))
+            {
+                XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
+                return (T)xmlSerializer.Deserialize(sr);
+            }
+        }
+
+        private static void CreateUpdateFile<T>(string filePath, T data)
         {
             TextWriter tw = new StreamWriter(filePath);
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
             xmlSerializer.Serialize(tw, data);
 
         }
-        private static T CheckCreateDatasetFile<T>(string filePath, Type dataType)
+        private static bool CheckIfDatasetFileExists(string filePath)
         {
             if (!File.Exists(filePath))
             {
-                CreateFile(filePath, dataType);
+                return false;
             }
+            return true;
         }
     }
 }

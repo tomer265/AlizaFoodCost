@@ -20,7 +20,7 @@
     <Id>3</Id>
     <Name>סלסלת פטריות</Name>
     <ImagePath>../../Images/Ingridients\mushrooms.jpg</ImagePath>
-    <Price>10</Price>
+    <Price>5</Price>
     <MeasurmentUnit>Unit</MeasurmentUnit>
     <UpsertDate>2021-01-22T01:49:24.0750482+02:00</UpsertDate>
   </Ingridient>

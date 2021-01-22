@@ -27,7 +27,10 @@ namespace AlizaFoodCost.Logic
                 {
                     ingridientsList = GetDataFromFile<List<Ingridient>>(IngridientsXmlFilePath);
                 }
-                (newItem as Ingridient).Id = ingridientsList.Count + 1;
+                if ((newItem as Ingridient).Id == 0)
+                {
+                    (newItem as Ingridient).Id = ingridientsList.Count + 1;
+                }
                 ingridientsList.Add(newItem as Ingridient);
                 FileInfo fi = new FileInfo((newItem as Ingridient).ImagePath);
                 string imageName = fi.Name;
@@ -40,6 +43,10 @@ namespace AlizaFoodCost.Logic
                 CreateUpdateFile<List<Ingridient>>(IngridientsXmlFilePath, ingridientsList);
             }
 
+            if (dataType == typeof(List<Ingridient>))
+            {
+                CreateUpdateFile<List<Ingridient>>(IngridientsXmlFilePath, newItem as List<Ingridient>);
+            }
         }
 
         public static List<Ingridient> GetIngridientsList()

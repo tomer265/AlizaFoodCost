@@ -141,6 +141,7 @@ namespace AlizaFoodCost
 
         private void HideAllGridsButSelected(params Grid[] gridsToShow)
         {
+            Grid_Welcome.Visibility = Visibility.Hidden;
             Grid_Ingridients_Menu.Visibility = Visibility.Hidden;
             Grid_New_Ingridient.Visibility = Visibility.Hidden;
             Grid_Update_Existing_Ingridient.Visibility = Visibility.Hidden;
@@ -154,8 +155,16 @@ namespace AlizaFoodCost
 
         private void Btn_Update_Ingridient_Click(object sender, RoutedEventArgs e)
         {
-            string selectedComboboxValue = ((sender as ComboBox).SelectedItem as ComboBoxItem).Content as string;
-            Ingridient ingridientToUpdate = Ingridients.First(i => i.Name == selectedComboboxValue);
+            string selectedComboboxValue = ((Cb_Update_Ingridients).SelectedItem as ComboBoxItem).Content as string;
+            Ingridients.First(i => i.Name == selectedComboboxValue).Price = decimal.Parse(Tb_Update_Selected_Ingridient_Price.Text);
+
+            Functions.CreateUpdateIngridientsXml<List<Ingridient>>(typeof(List<Ingridient>), Ingridients);
+
+            MessageBox.Show("המחיר לחומר הגלם " + selectedComboboxValue + " עודכן בהצלחה", "הודעה על עדכון חומר גלם",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information,
+                    MessageBoxResult.OK,
+                    MessageBoxOptions.RightAlign);
         }
     }
 }

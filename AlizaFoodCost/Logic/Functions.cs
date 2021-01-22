@@ -32,7 +32,10 @@ namespace AlizaFoodCost.Logic
                 FileInfo fi = new FileInfo((newItem as Ingridient).ImagePath);
                 string imageName = fi.Name;
                 string imagesFolderPath = CheckCreateSpecificImagesDirectory("Ingridients");
-                File.Copy((newItem as Ingridient).ImagePath, $"{imagesFolderPath}\\{imageName}");
+                if (!File.Exists($"{imagesFolderPath}\\{imageName}"))
+                {
+                    File.Copy((newItem as Ingridient).ImagePath, $"{imagesFolderPath}\\{imageName}");
+                }
                 (newItem as Ingridient).ImagePath = Path.Combine(imagesFolderPath, imageName);
                 CreateUpdateFile<List<Ingridient>>(IngridientsXmlFilePath, ingridientsList);
             }
@@ -82,6 +85,7 @@ namespace AlizaFoodCost.Logic
             TextWriter tw = new StreamWriter(filePath);
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
             xmlSerializer.Serialize(tw, data);
+            tw.Dispose();
 
         }
         private static bool CheckIfDatasetFileExists(string filePath)

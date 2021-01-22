@@ -38,38 +38,17 @@ namespace AlizaFoodCost
 
         private void Btn_New_Ingridient_Click(object sender, RoutedEventArgs e)
         {
-            Grid_Ingridients_Menu.Visibility = Visibility.Hidden;
-            Grid_New_Ingridient.Visibility = Visibility.Visible;
-            Grid_Update_Existing_Ingridient.Visibility = Visibility.Hidden;
+            HideAllGridsButSelected(Grid_New_Ingridient);
         }
 
         private void Btn_Edit_Ingridient_Click(object sender, RoutedEventArgs e)
         {
-            Grid_Ingridients_Menu.Visibility = Visibility.Hidden;
-            Grid_New_Ingridient.Visibility = Visibility.Hidden;
-            Grid_Update_Existing_Ingridient.Visibility = Visibility.Visible;
-
+            HideAllGridsButSelected(Grid_Update_Existing_Ingridient);
             Ingridients = Functions.GetIngridientsList();
+            Cb_Update_Ingridients.Items.Clear();
             foreach (Ingridient ingridient in this.Ingridients)
             {
-                bool itemExists = false;
-                if (Cb_Update_Ingridients.Items.Count > 0)
-                {
-
-                    foreach (ComboBoxItem cbi in Cb_Update_Ingridients.Items)
-                    {
-                        itemExists = cbi.Content.Equals(ingridient.Name);
-                        if (itemExists)
-                        {
-                            break;
-                        }
-                        Cb_Update_Ingridients.Items.Add(new ComboBoxItem() { Content = ingridient.Name });
-                    }
-                }
-                else
-                {
-                    Cb_Update_Ingridients.Items.Add(new ComboBoxItem() { Content = ingridient.Name });
-                }
+                Cb_Update_Ingridients.Items.Add(new ComboBoxItem() { Content = ingridient.Name });
             }
         }
 
@@ -87,11 +66,12 @@ namespace AlizaFoodCost
 
         private void Btn_Ingridients_Click(object sender, RoutedEventArgs e)
         {
-            this.Grid_Ingridients_Menu.Visibility = Visibility.Visible;
+            HideAllGridsButSelected(Grid_Ingridients_Menu);
         }
 
         private void Btn_Add_New_Ingridient_Click(object sender, RoutedEventArgs e)
         {
+            HideAllGridsButSelected(Grid_New_Ingridient);
             Ingridient newIngridient = new Ingridient()
             {
                 Name = this.Tb_New_Ingridient_Name.Text,
@@ -101,15 +81,81 @@ namespace AlizaFoodCost
                 UpsertDate = DateTime.Now
             };
 
+
+
+            Ingridients = Functions.GetIngridientsList();
+            if (Ingridients.Select(i => i.Name == newIngridient.Name).Any())
+            {
+                MessageBox.Show("כבר קיים מוצר בשם " + newIngridient.Name + ". יש לבחור שם אחר או לערוך את חומר הגלם .הקיים",
+                    "תקלה - מוצר קיים",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning,
+                    MessageBoxResult.OK,
+                    MessageBoxOptions.RightAlign);
+                return;
+            }
+
             Functions.CreateUpdateIngridientsXml<Ingridient>(typeof(Ingridient), newIngridient);
+
+            Img_New_Product.Source = null;
+            Tb_New_Ingridient_Name.Text = string.Empty;
+            Tb_New_Ingridient_Price.Text = string.Empty;
+            Select_New_Ingridient_M_Unit.SelectedIndex = 0;
+
+
         }
 
         private void Cb_Update_Ingridients_Selected(object sender, RoutedEventArgs e)
         {
+            HideAllGridsButSelected(Grid_Update_Selected_Ingridient, Grid_Update_Existing_Ingridient);
             string selectedComboboxValue = ((sender as ComboBox).SelectedItem as ComboBoxItem).Content as string;
             Ingridient selectedIngridient = Ingridients.Where(i => i.Name == selectedComboboxValue).FirstOrDefault();
             string imagePath = System.IO.Path.GetFullPath(selectedIngridient.ImagePath);
             Image_Selected_Ingridient.Source = new BitmapImage(new Uri(imagePath));
+
+            switch (selectedIngridient.MeasurmentUnit)
+            {
+                case MeasurmentUnit.Gram:
+                    Lbl_Update_Selected_Ingridient_Price.Content = MeasurmentUnitHeb.Gram;
+                    break;
+                case MeasurmentUnit.HundredGrams:
+                    Lbl_Update_Selected_Ingridient_Price.Content = MeasurmentUnitHeb.HundredGrams;
+                    break;
+                case MeasurmentUnit.Kilo:
+                    Lbl_Update_Selected_Ingridient_Price.Content = MeasurmentUnitHeb.Kilo;
+                    break;
+                case MeasurmentUnit.Liter:
+                    Lbl_Update_Selected_Ingridient_Price.Content = MeasurmentUnitHeb.Liter;
+                    break;
+                case MeasurmentUnit.Milliliter:
+                    Lbl_Update_Selected_Ingridient_Price.Content = MeasurmentUnitHeb.Milliliter;
+                    break;
+                case MeasurmentUnit.Unit:
+                    Lbl_Update_Selected_Ingridient_Price.Content = MeasurmentUnitHeb.Unit;
+                    break;
+            }
+
+            Tb_Update_Selected_Ingridient_Price.Text = selectedIngridient.Price.ToString();
+
+        }
+
+        private void HideAllGridsButSelected(params Grid[] gridsToShow)
+        {
+            Grid_Ingridients_Menu.Visibility = Visibility.Hidden;
+            Grid_New_Ingridient.Visibility = Visibility.Hidden;
+            Grid_Update_Existing_Ingridient.Visibility = Visibility.Hidden;
+            Grid_Update_Selected_Ingridient.Visibility = Visibility.Hidden;
+            foreach (Grid gridToShow in gridsToShow)
+            {
+                gridToShow.Visibility = Visibility.Visible;
+            }
+
+        }
+
+        private void Btn_Update_Ingridient_Click(object sender, RoutedEventArgs e)
+        {
+            string selectedComboboxValue = ((sender as ComboBox).SelectedItem as ComboBoxItem).Content as string;
+            Ingridient ingridientToUpdate = Ingridients.First(i => i.Name == selectedComboboxValue);
         }
     }
 }

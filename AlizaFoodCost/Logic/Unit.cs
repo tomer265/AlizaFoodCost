@@ -15,4 +15,14 @@ namespace AlizaFoodCost.Logic
         Liter = 4,
         Milliliter = 5
     }
+
+    public partial class MeasurmentUnitHeb
+    {
+        public const string Gram = "מחיר נוכחי לגרם";
+        public const string HundredGrams = "מחיר נוכחי למאה גרם";
+        public const string Kilo = "מחיר נוכחי לקילו";
+        public const string Unit = "מחיר נוכחי ליחידה";
+        public const string Liter = "מחיר נוכחי לליטר";
+        public const string Milliliter = "מחיר נוכחי למילי-ליטר";
+    }
 }

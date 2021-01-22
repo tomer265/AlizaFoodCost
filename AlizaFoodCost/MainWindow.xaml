@@ -68,7 +68,13 @@
             <ComboBox SelectionChanged="Cb_Update_Ingridients_Selected" x:Name="Cb_Update_Ingridients" FontSize="25" BorderBrush="ForestGreen" Height="40" Margin="10,50,697,411">
                 
             </ComboBox>
-            <Image x:Name="Image_Selected_Ingridient" Height="300" Width="300" Margin="203,24,392,176"></Image>
+            <Grid x:Name="Grid_Update_Selected_Ingridient" Visibility="Visible" Height="500" Width="150" Margin="245,0,500,0">
+                <Label x:Name="Lbl_Update_Selected_Ingridient_Price" Margin="0,37,0,435"></Label>
+                <TextBox x:Name="Tb_Update_Selected_Ingridient_Price" FontSize="25" BorderBrush="ForestGreen" Height="40" Margin="0,75,0,385"></TextBox>
+                
+            </Grid>
+            <Button FontSize="13" Foreground="White" Background="ForestGreen" Click="Btn_Update_Ingridient_Click" x:Name="Btn_Update_Ingridient" Margin="272,129,534,341">עדכן</Button>
+            <Image x:Name="Image_Selected_Ingridient" Height="300" Width="300" Margin="540,50,55,150"></Image>
         </Grid>
     </Grid>
 </Window>

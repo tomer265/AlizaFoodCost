@@ -7,80 +7,112 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Background="White" Title="Aliza Food Cost Calculator" FlowDirection="RightToLeft" Height="720" Width="1280">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="80"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid Grid.ColumnSpan="2" Background="#008943">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                <Canvas Width="25"></Canvas>
-                <Button Height="75" Width="75" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}">
-                    <materialDesign:PackIcon Height="75" Width="75" Kind="FoodItalian"/>
-                </Button>
-                <Canvas Width="75"></Canvas>
-                <Button Height="75" Click="Btn_Ingridients_Click" Width="75" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" Margin="0,2">
-                    <materialDesign:PackIcon Height="75" Width="75" Kind="ShoppingCart"/>
-                </Button>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <TextBlock Foreground="White" Margin="15" FontSize="25">
+    <ScrollViewer>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.ColumnSpan="2" Background="#008943">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                    <Canvas Width="25"></Canvas>
+                    <Button Cursor="Hand" Click="Btn_Recipes_Click" x:Name="Btn_Recipes" Height="75" Width="75" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}">
+                        <materialDesign:PackIcon Height="75" Width="75" Kind="FoodItalian"/>
+                    </Button>
+                    <Canvas Width="75"></Canvas>
+                    <Button Cursor="Hand" Height="75" Click="Btn_Ingridients_Click" Width="75" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" Margin="0,2">
+                        <materialDesign:PackIcon Height="75" Width="75" Kind="ShoppingCart"/>
+                    </Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock Foreground="White" Margin="15" FontSize="25">
                     מחשבון עלות מזון - עליזה אוכל מוכן בע"מ
-                </TextBlock>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button x:Name="Btn_Exit" Click="Btn_Exit_Click" Height="75" Width="75" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}">
-                    <materialDesign:PackIcon Height="75" Width="75" Kind="ExitToApp"/>
-                </Button>
-                <Canvas Width="25"></Canvas>
-            </StackPanel>
-        </Grid>
-        <Grid x:Name="Grid_Welcome" Visibility="Visible" Height="361" Margin="30,112,26,0" Grid.Row="1" VerticalAlignment="Top" Width="1215">
-            <Label FontWeight="Bold" FontSize="30" Foreground="#008943" Margin="373,28,369,277">ברוכים הבאים למחשבון עלות מזון.</Label>
-            <Label FontWeight="Bold" FontSize="30" Foreground="#008943" Margin="215,109,196,194">יש לבחור באחת מהאופציות בצד הימני העליון של המסך</Label>
-        </Grid>
-        <Grid Visibility="Hidden" x:Name="Grid_Ingridients_Menu" HorizontalAlignment="Left" Height="361" Margin="128,112,0,0" Grid.Row="1" VerticalAlignment="Top" Width="1015" Grid.ColumnSpan="2">
-            <Button FontSize="18" x:Name="Btn_New_Ingridient" Click="Btn_New_Ingridient_Click" Height="75" Width="175" Background="#008943" Foreground="White" BorderBrush="{x:Null}" Margin="159,136,681,150">
-                הוסף חומר גלם חדש
-            </Button>
-            <Button FontSize="18" x:Name="Btn_Edit_Ingridient" Click="Btn_Edit_Ingridient_Click" Height="75" Width="175" Background="#008943" Foreground="White" BorderBrush="{x:Null}" Margin="679,136,161,150">
-                ערוך חומר גלם קיים
-            </Button>
-        </Grid>
-        <Grid Visibility="Hidden" x:Name="Grid_New_Ingridient" HorizontalAlignment="Left" Height="500" Width="895" Margin="229,56,0,54.4" Grid.Row="1">
-            <Label Height="40" FontSize="20" Margin="10,0,779,460">שם המוצר:</Label>
-            <TextBox FontSize="25" BorderBrush="ForestGreen" Height="40" x:Name="Tb_New_Ingridient_Name" Margin="10,40,668,420"/>
-            <Label Height="40" Width="60" FontSize="20" Margin="10,98,825,362">מחיר:</Label>
-            <TextBox FontSize="25" BorderBrush="ForestGreen" Height="40" x:Name="Tb_New_Ingridient_Price" Margin="10,138,669,322"/>
-            <Label Height="40" FontSize="20" Margin="10,197,777,263">יחידת מידה:</Label>
-            <ComboBox FontSize="25" BorderBrush="ForestGreen" Height="40" x:Name="Select_New_Ingridient_M_Unit" Margin="10,237,668,223">
-                <ComboBoxItem>גרם</ComboBoxItem>
-                <ComboBoxItem>100 גרם</ComboBoxItem>
-                <ComboBoxItem>קילו</ComboBoxItem>
-                <ComboBoxItem>יחידה</ComboBoxItem>
-                <ComboBoxItem>מילי-ליטר</ComboBoxItem>
-                <ComboBoxItem>ליטר</ComboBoxItem>
-            </ComboBox>
-            <Button Click="Btn_Upload_Click" FontSize="13" Foreground="White" Background="ForestGreen" HorizontalAlignment="Left" Margin="14,326,0,0" VerticalAlignment="Top" Height="33" Width="106">
-                העלאת תמונה
-            </Button>
-            <Button Click="Btn_Add_New_Ingridient_Click" FontSize="13" Foreground="White" Background="ForestGreen" Margin="88,404,711,62">הוספת מוצר +</Button>
-            <Image x:Name="Img_New_Product" Margin="404,59,191,141" Height="300" HorizontalAlignment="Center" Width="300"/>
-        </Grid>
-        <Grid x:Name="Grid_Update_Existing_Ingridient" Visibility="Hidden" HorizontalAlignment="Left" Height="500" Width="895" Margin="229,56,0,54.4" Grid.Row="1">
-            <Label Height="40" FontSize="20" Margin="10,10,777,450">בחר רכיב</Label>
-            <ComboBox SelectionChanged="Cb_Update_Ingridients_Selected" x:Name="Cb_Update_Ingridients" FontSize="25" BorderBrush="ForestGreen" Height="40" Margin="10,50,697,411">
-
-            </ComboBox>
-            <Grid x:Name="Grid_Update_Selected_Ingridient" Visibility="Hidden" Height="500" Width="150" Margin="245,0,500,0">
-                <Label x:Name="Lbl_Update_Selected_Ingridient_Price" Margin="0,37,0,435"></Label>
-                <TextBox x:Name="Tb_Update_Selected_Ingridient_Price" FontSize="25" BorderBrush="ForestGreen" Height="40" Margin="0,75,0,385"></TextBox>
-
+                    </TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Cursor="Hand" x:Name="Btn_Exit" Click="Btn_Exit_Click" Height="75" Width="75" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}">
+                        <materialDesign:PackIcon Height="75" Width="75" Kind="ExitToApp"/>
+                    </Button>
+                    <Canvas Width="25"></Canvas>
+                </StackPanel>
             </Grid>
-            <Button FontSize="13" Foreground="White" Background="ForestGreen" Click="Btn_Update_Ingridient_Click" x:Name="Btn_Update_Ingridient" Margin="272,129,534,341">עדכן</Button>
-            <Image x:Name="Image_Selected_Ingridient" Height="300" Width="300" Margin="540,50,55,150"></Image>
+            <Grid x:Name="Grid_Welcome" Visibility="Hidden" Height="361" Margin="30,112,26,0" Grid.Row="1" VerticalAlignment="Top" Width="1215">
+                <Label FontWeight="Bold" FontSize="30" Foreground="#008943" Margin="371,28,371,277">ברוכים הבאים למחשבון עלות מזון.</Label>
+                <Label FontWeight="Bold" FontSize="30" Foreground="#008943" Margin="155,109,154,194">להתחלה יש לבחור באחת מהאופציות בצד הימני העליון של המסך.</Label>
+            </Grid>
+            <Grid Visibility="Hidden" x:Name="Grid_Recipes_Menu" HorizontalAlignment="Left" Height="361" Margin="128,112,0,0" Grid.Row="1" VerticalAlignment="Top" Width="1015" Grid.ColumnSpan="2">
+                <Button Cursor="Hand" FontSize="18" x:Name="Btn_New_Recipe" Click="Btn_New_Recipe_Click"  Height="75" Background="#008943" Foreground="White" BorderBrush="{x:Null}" Margin="132,136,681,150">
+                    הוספת מתכון חדש
+                </Button>
+                <Button Cursor="Hand" FontSize="18" x:Name="Btn_Edit_Recipe" Click="Btn_Edit_Recipe_Click" Height="75" Background="#008943" Foreground="White" BorderBrush="{x:Null}" Margin="679,136,140,150">
+                    עריכת מתכון קיים
+                </Button>
+            </Grid>
+            <Grid Visibility="Hidden" x:Name="Grid_Ingridients_Menu" HorizontalAlignment="Left" Height="361" Margin="128,112,0,0" Grid.Row="1" VerticalAlignment="Top" Width="1015" Grid.ColumnSpan="2">
+                <Button Cursor="Hand" FontSize="18" x:Name="Btn_New_Ingridient" Click="Btn_New_Ingridient_Click" Height="75" Background="#008943" Foreground="White" BorderBrush="{x:Null}" Margin="132,136,681,150">
+                    הוספת חומר גלם חדש
+                </Button>
+                <Button Cursor="Hand" FontSize="18" x:Name="Btn_Edit_Ingridient" Click="Btn_Edit_Ingridient_Click" Height="75" Background="#008943" Foreground="White" BorderBrush="{x:Null}" Margin="679,136,140,150">
+                    עריכת חומר גלם קיים
+                </Button>
+            </Grid>
+            <Grid Visibility="Hidden" x:Name="Grid_New_Ingridient" HorizontalAlignment="Left" Height="500" Width="895" Margin="229,56,0,54.4" Grid.Row="1">
+                <Label Height="40" FontSize="20" Margin="10,0,779,460">שם המוצר:</Label>
+                <TextBox FontSize="25" BorderBrush="ForestGreen" Height="40" x:Name="Tb_New_Ingridient_Name" Margin="10,40,668,420"/>
+                <Label Height="40" Width="60" FontSize="20" Margin="10,98,825,362">מחיר:</Label>
+                <TextBox FontSize="25" BorderBrush="ForestGreen" Height="40" x:Name="Tb_New_Ingridient_Price" Margin="10,138,669,322"/>
+                <Label Height="40" FontSize="20" Margin="10,197,777,263">יחידת מידה:</Label>
+                <ComboBox FontSize="25" BorderBrush="ForestGreen" Height="40" x:Name="Select_New_Ingridient_M_Unit" Margin="10,237,668,223">
+                    <ComboBoxItem>גרם</ComboBoxItem>
+                    <ComboBoxItem>100 גרם</ComboBoxItem>
+                    <ComboBoxItem>קילו</ComboBoxItem>
+                    <ComboBoxItem>יחידה</ComboBoxItem>
+                    <ComboBoxItem>מילי-ליטר</ComboBoxItem>
+                    <ComboBoxItem>ליטר</ComboBoxItem>
+                </ComboBox>
+                <Button Click="Btn_Upload_Click" FontSize="13" Foreground="White" Background="ForestGreen" HorizontalAlignment="Left" Margin="14,326,0,0" VerticalAlignment="Top" Height="33" Width="106">
+                    העלאת תמונה
+                </Button>
+                <Button Click="Btn_Add_New_Ingridient_Click" FontSize="13" Foreground="White" Background="ForestGreen" Margin="88,404,711,62">הוספת מוצר +</Button>
+                <Image x:Name="Img_New_Product" Margin="404,59,191,141" Height="300" HorizontalAlignment="Center" Width="300"/>
+            </Grid>
+            <Grid x:Name="Grid_Update_Existing_Ingridient" Visibility="Hidden" HorizontalAlignment="Left" Height="500" Width="895" Margin="229,56,0,54.4" Grid.Row="1">
+                <Label Height="40" FontSize="20" Margin="10,10,777,450">בחר רכיב</Label>
+                <ComboBox SelectionChanged="Cb_Update_Ingridients_Selected" x:Name="Cb_Update_Ingridients" FontSize="25" BorderBrush="ForestGreen" Height="40" Margin="10,50,697,411">
+
+                </ComboBox>
+                <Grid x:Name="Grid_Update_Selected_Ingridient" Visibility="Hidden" Height="500" Width="150" Margin="245,0,500,0">
+                    <Label x:Name="Lbl_Update_Selected_Ingridient_Price" Margin="0,37,0,435"></Label>
+                    <TextBox x:Name="Tb_Update_Selected_Ingridient_Price" FontSize="25" BorderBrush="ForestGreen" Height="40" Margin="0,75,0,385"></TextBox>
+
+                </Grid>
+                <Button FontSize="13" Foreground="White" Background="ForestGreen" Click="Btn_Update_Ingridient_Click" x:Name="Btn_Update_Ingridient" Margin="272,129,534,341">עדכן</Button>
+                <Image x:Name="Image_Selected_Ingridient" Height="300" Width="300" Margin="540,50,55,150"></Image>
+            </Grid>
+            <Grid x:Name="Grid_New_Recipe" Visibility="Hidden" HorizontalAlignment="Left" Height="500" Width="895" Margin="229,56,0,54.4" Grid.Row="1">
+                <Label Height="40" FontSize="20" Margin="10,0,779,460">שם המתכון:</Label>
+                <TextBox FontSize="25" x:Name="Tb_New_Recipe_Name" BorderBrush="ForestGreen" Height="40" Margin="10,40,668,420"></TextBox>
+                <Label Height="40" Width="60" FontSize="20" Margin="10,98,825,362">מחיר מבוקש לקילו:</Label>
+                <TextBox FontSize="25" BorderBrush="ForestGreen" Height="40" x:Name="Tb_New_Recipe_Requested_Price" Margin="10,138,669,322"></TextBox>
+                <Label Height="40" FontSize="20" Margin="10,197,747,263">העלאת תמונה</Label>
+                <Button Cursor="Hand" x:Name="Btn_Upload_Recipe_Image" Click="Btn_Upload_Recipe_Image_Click" FontSize="13" Foreground="White" Background="ForestGreen" HorizontalAlignment="Left" Margin="17,242,0,0" VerticalAlignment="Top" Height="33" Width="106">
+                    העלאת תמונה
+                </Button>
+                <Button x:Name="Btn_Add_Recipe_Step_2" Click="Btn_Add_Recipe_Step_2_Click" FontSize="13" Foreground="White" Background="ForestGreen" Margin="60,329,668,137">
+                    מעבר למסך מצרכי המתכון
+                </Button>
+                <Image x:Name="Img_New_Recipe" Margin="404,59,73,81" HorizontalAlignment="Center" Width="418"/>
+            </Grid>
+            <Grid x:Name="Grid_New_Recipe_Ingridients" Visibility="Visible" HorizontalAlignment="Left" Height="500" Width="1146" Margin="48,56,0,53" Grid.Row="1">
+                <Label Height="40" FontSize="20" Margin="10,0,10,460" x:Name="Lbl_New_Recipe_Step_2">מתכון בדיקה</Label>
+                <Button Click="AddIngridientRow" FontSize="13" Foreground="White" Background="#008943" Margin="10,66,959,400">הוספת רכיב למתכון +</Button>
+                <ComboBox ScrollViewer.VerticalScrollBarVisibility="Visible" FontSize="25" BorderBrush="ForestGreen" x:Name="Cb_New_Recipe_1" Width="204" Height="40" Margin="32,123,910,337">
+                </ComboBox>
+                <TextBox x:Name="Tb_New_Recipe_Ingridient_1_Amount" Margin="269,123,815,337"></TextBox>
+                <Label Margin="363,123,650,337" x:Name="Lbl_New_Recipe_Ingridient_Amoun_Name"></Label>
+            </Grid>
+            <Label Foreground="#008943" Margin="559,560,437,18" Grid.Row="1">כל הזכויות שמורות לתומר לביא</Label>
+            <materialDesign:PackIcon Margin="727,561,0,0" Foreground="#008943" Height="25" Width="25" Kind="Copyright" Grid.Row="1"/>
         </Grid>
-        <Label Foreground="#008943" Margin="559,560,437,18" Grid.Row="1">כל הזכויות שמורות לתומר לביא</Label>
-        <materialDesign:PackIcon Margin="727,561,0,0" Foreground="#008943" Height="25" Width="25" Kind="Copyright" Grid.Row="1"/>
-    </Grid>
+    </ScrollViewer>
 </Window>

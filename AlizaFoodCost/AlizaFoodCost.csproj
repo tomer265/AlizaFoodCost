@@ -80,6 +80,8 @@
   <ItemGroup>
     <Compile Include="Models\Ingridient.cs" />
     <Compile Include="Logic\Unit.cs" />
+    <Compile Include="Models\IngridientUsage.cs" />
+    <Compile Include="Models\Recipe.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -24,12 +24,4 @@
     <MeasurmentUnit>Unit</MeasurmentUnit>
     <UpsertDate>2021-01-22T01:49:24.0750482+02:00</UpsertDate>
   </Ingridient>
-  <Ingridient>
-    <Id>4</Id>
-    <Name>מלפפון בייבי</Name>
-    <ImagePath>../../Images/Ingridients\baby-cucumber.jpg</ImagePath>
-    <Price>14.9</Price>
-    <MeasurmentUnit>Unit</MeasurmentUnit>
-    <UpsertDate>2021-01-22T01:55:21.3412213+02:00</UpsertDate>
-  </Ingridient>
 </ArrayOfIngridient>

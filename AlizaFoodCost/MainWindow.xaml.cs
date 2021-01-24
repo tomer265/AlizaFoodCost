@@ -29,7 +29,8 @@ namespace AlizaFoodCost
             InitializeComponent();
         }
 
-        string selectedFilePath = string.Empty;
+        string SelectedIngridientImagePath = string.Empty;
+        string SelectedRecipeImagePath = string.Empty;
 
         private void Btn_Exit_Click(object sender, RoutedEventArgs e)
         {
@@ -59,7 +60,7 @@ namespace AlizaFoodCost
             ofd.ShowDialog();
             if (!string.IsNullOrEmpty(ofd.FileName))
             {
-                selectedFilePath = ofd.FileName;
+                SelectedIngridientImagePath = ofd.FileName;
                 Img_New_Product.Source = new BitmapImage(new Uri(ofd.FileName));
             }
         }
@@ -75,7 +76,7 @@ namespace AlizaFoodCost
             Ingridient newIngridient = new Ingridient()
             {
                 Name = this.Tb_New_Ingridient_Name.Text,
-                ImagePath = selectedFilePath,
+                ImagePath = SelectedIngridientImagePath,
                 MeasurmentUnit = (MeasurmentUnit)Select_New_Ingridient_M_Unit.SelectedIndex,
                 Price = decimal.Parse(Tb_New_Ingridient_Price.Text),
                 UpsertDate = DateTime.Now
@@ -146,6 +147,8 @@ namespace AlizaFoodCost
             Grid_New_Ingridient.Visibility = Visibility.Hidden;
             Grid_Update_Existing_Ingridient.Visibility = Visibility.Hidden;
             Grid_Update_Selected_Ingridient.Visibility = Visibility.Hidden;
+            Grid_Recipes_Menu.Visibility = Visibility.Hidden;
+            Grid_New_Recipe.Visibility = Visibility.Hidden;
             foreach (Grid gridToShow in gridsToShow)
             {
                 gridToShow.Visibility = Visibility.Visible;
@@ -165,6 +168,55 @@ namespace AlizaFoodCost
                     MessageBoxImage.Information,
                     MessageBoxResult.OK,
                     MessageBoxOptions.RightAlign);
+        }
+
+        private void Btn_Recipes_Click(object sender, RoutedEventArgs e)
+        {
+            HideAllGridsButSelected(Grid_Recipes_Menu);
+        }
+
+        private void Btn_New_Recipe_Click(object sender, RoutedEventArgs e)
+        {
+            HideAllGridsButSelected(Grid_New_Recipe);
+        }
+
+        private void Btn_Edit_Recipe_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Btn_Upload_Recipe_Image_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png";
+            ofd.ShowDialog();
+            if (!string.IsNullOrEmpty(ofd.FileName))
+            {
+                SelectedRecipeImagePath = ofd.FileName;
+                Img_New_Recipe.Source = new BitmapImage(new Uri(ofd.FileName));
+            }
+        }
+
+        private void Btn_Add_Recipe_Step_2_Click(object sender, RoutedEventArgs e)
+        {
+            HideAllGridsButSelected(Grid_New_Recipe_Ingridients);
+            Lbl_New_Recipe_Step_2.Content = $"עריכת מתכון חדש: {Tb_New_Recipe_Name.Text} לפי תמחור של {Tb_New_Recipe_Requested_Price.Text} שקלים לקילו.";
+            Ingridients = Functions.GetIngridientsList();
+            foreach (Ingridient ingridient in this.Ingridients)
+            {
+                Cb_New_Recipe_1.Items.Add(new ComboBoxItem() { Content = ingridient.Name });
+            }
+
+        }
+
+        private void AddIngridientRow(object sender, RoutedEventArgs e)
+        {
+            ComboBox newCb = new ComboBox();
+            Ingridients = Functions.GetIngridientsList();
+            foreach (Ingridient ingridient in this.Ingridients)
+            {
+                newCb.Items.Add(new ComboBoxItem() { Content = ingridient.Name });
+            }
         }
     }
 }

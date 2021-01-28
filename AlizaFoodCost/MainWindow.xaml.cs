@@ -204,7 +204,7 @@ namespace AlizaFoodCost
             Ingridients = Functions.GetIngridientsList();
             foreach (Ingridient ingridient in this.Ingridients)
             {
-                Cb_New_Recipe_1.Items.Add(new ComboBoxItem() { Content = ingridient.Name });
+                Cb_New_Recipe_Ing_1.Items.Add(new ComboBoxItem() { Content = ingridient.Name });
             }
 
         }
@@ -212,11 +212,28 @@ namespace AlizaFoodCost
         private void AddIngridientRow(object sender, RoutedEventArgs e)
         {
             ComboBox newCb = new ComboBox();
+            Grid newGrid = new Grid()
+            {
+                Width = 204,
+                Height = 40,
+                Margin = new Thickness(10, 205, 0, 221)
+            };
+            newGrid.Children.Add(newCb);
+            Grid_New_Recipe_Ingridients.Children.Add(newGrid);
             Ingridients = Functions.GetIngridientsList();
             foreach (Ingridient ingridient in this.Ingridients)
             {
                 newCb.Items.Add(new ComboBoxItem() { Content = ingridient.Name });
             }
+        }
+
+        private void Cb_New_Recipe_Ing_1_Selected(object sender, RoutedEventArgs e)
+        {
+            ComboBox senderCb = (ComboBox)sender;
+            ComboBoxItem selectedFirstItem = (ComboBoxItem)senderCb.SelectedItem;
+            string ingridientValue = (string)selectedFirstItem.Content;
+            Ingridient ingridient = Ingridients.FirstOrDefault(i => i.Name == ingridientValue);
+            Lbl_New_Recipe_Ingridient_Amount_Name.Content = MeasurmentUnitHeb.GetUnitHebrewValue(ingridient.MeasurmentUnit);
         }
     }
 }

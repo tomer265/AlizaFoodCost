@@ -24,5 +24,31 @@ namespace AlizaFoodCost.Logic
         public const string Unit = "מחיר נוכחי ליחידה";
         public const string Liter = "מחיר נוכחי לליטר";
         public const string Milliliter = "מחיר נוכחי למילי-ליטר";
+
+        public static string GetUnitHebrewValue(MeasurmentUnit unit)
+        {
+            switch (unit)
+            {
+                case MeasurmentUnit.Gram:
+                    return HebMeasurmentValue(Gram);
+                case MeasurmentUnit.HundredGrams:
+                    return HebMeasurmentValue(HundredGrams);
+                case MeasurmentUnit.Kilo:
+                    return HebMeasurmentValue(Kilo);
+                case MeasurmentUnit.Unit:
+                    return HebMeasurmentValue(Unit);
+                case MeasurmentUnit.Liter:
+                    return HebMeasurmentValue(Liter);
+                case MeasurmentUnit.Milliliter:
+                    return HebMeasurmentValue(Milliliter);
+                default:
+                    return null;
+            }
+        }
+
+        private static string HebMeasurmentValue(string value)
+        {
+            return value.Replace("מחיר נוכחי ל", "");
+        }
     }
 }

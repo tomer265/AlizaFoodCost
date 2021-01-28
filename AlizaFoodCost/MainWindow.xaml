@@ -106,10 +106,12 @@
             <Grid x:Name="Grid_New_Recipe_Ingridients" Visibility="Visible" HorizontalAlignment="Left" Height="500" Width="1146" Margin="48,56,0,53" Grid.Row="1">
                 <Label Height="40" FontSize="20" Margin="10,0,10,460" x:Name="Lbl_New_Recipe_Step_2">מתכון בדיקה</Label>
                 <Button Click="AddIngridientRow" FontSize="13" Foreground="White" Background="#008943" Margin="10,66,959,400">הוספת רכיב למתכון +</Button>
-                <ComboBox ScrollViewer.VerticalScrollBarVisibility="Visible" FontSize="25" BorderBrush="ForestGreen" x:Name="Cb_New_Recipe_1" Width="204" Height="40" Margin="32,123,910,337">
-                </ComboBox>
-                <TextBox x:Name="Tb_New_Recipe_Ingridient_1_Amount" Margin="269,123,815,337"></TextBox>
-                <Label Margin="363,123,650,337" x:Name="Lbl_New_Recipe_Ingridient_Amoun_Name"></Label>
+                <Grid x:Name="Grid_Ing_1" Margin="10,127,0,299">
+                    <ComboBox ScrollViewer.VerticalScrollBarVisibility="Visible" FontSize="25" BorderBrush="ForestGreen" x:Name="Cb_New_Recipe_Ing_1" SelectionChanged="Cb_New_Recipe_Ing_1_Selected" Width="204" Height="40" Margin="20,16,911.6,18">
+                    </ComboBox>
+                    <TextBox FontSize="25" x:Name="Tb_New_Recipe_Ingridient_1_Amount" Margin="264,15,818.6,18"></TextBox>
+                    <Label FontSize="25" Margin="337,15,678.6,19" x:Name="Lbl_New_Recipe_Ingridient_Amount_Name"></Label>
+                </Grid>
             </Grid>
             <Label Foreground="#008943" Margin="559,560,437,18" Grid.Row="1">כל הזכויות שמורות לתומר לביא</Label>
             <materialDesign:PackIcon Margin="727,561,0,0" Foreground="#008943" Height="25" Width="25" Kind="Copyright" Grid.Row="1"/>

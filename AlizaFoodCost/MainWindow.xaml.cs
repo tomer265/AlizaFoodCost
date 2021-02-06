@@ -31,7 +31,7 @@ namespace AlizaFoodCost
 
         string SelectedIngridientImagePath = string.Empty;
         string SelectedRecipeImagePath = string.Empty;
-
+        Thickness CurrentThickness = new Thickness();
         private void Btn_Exit_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
@@ -148,6 +148,7 @@ namespace AlizaFoodCost
             Grid_Update_Existing_Ingridient.Visibility = Visibility.Hidden;
             Grid_Update_Selected_Ingridient.Visibility = Visibility.Hidden;
             Grid_Recipes_Menu.Visibility = Visibility.Hidden;
+            Grid_New_Recipe_View.Visibility = Visibility.Hidden;
             Grid_New_Recipe.Visibility = Visibility.Hidden;
             foreach (Grid gridToShow in gridsToShow)
             {
@@ -199,32 +200,42 @@ namespace AlizaFoodCost
 
         private void Btn_Add_Recipe_Step_2_Click(object sender, RoutedEventArgs e)
         {
-            HideAllGridsButSelected(Grid_New_Recipe_Ingridients);
-            Lbl_New_Recipe_Step_2.Content = $"עריכת מתכון חדש: {Tb_New_Recipe_Name.Text} לפי תמחור של {Tb_New_Recipe_Requested_Price.Text} שקלים לקילו.";
+            HideAllGridsButSelected(Grid_New_Recipe_View);
+            Lbl_New_Recipe_Step_2.Content = $"עריכת מתכון חדש: {Tb_New_Recipe_Name.Text} לפי תמחור של {Tb_New_Recipe_Requested_Price.Text} שקלים ליחידה.";
             Ingridients = Functions.GetIngridientsList();
             foreach (Ingridient ingridient in this.Ingridients)
             {
                 Cb_New_Recipe_Ing_1.Items.Add(new ComboBoxItem() { Content = ingridient.Name });
             }
-
         }
 
         private void AddIngridientRow(object sender, RoutedEventArgs e)
         {
-            ComboBox newCb = new ComboBox();
-            Grid newGrid = new Grid()
-            {
-                Width = 204,
-                Height = 40,
-                Margin = new Thickness(10, 205, 0, 221)
-            };
-            newGrid.Children.Add(newCb);
-            Grid_New_Recipe_Ingridients.Children.Add(newGrid);
+            Grid newGrid = SetNewIngridientGridRow();
+
             Ingridients = Functions.GetIngridientsList();
+            ComboBox newCb = new ComboBox()
+            {
+                FontSize = 25,
+                Name = "Cb_New_Recipe_Ing_" + Grid_New_Recipe_Ingridients.Children.Count
+            };
             foreach (Ingridient ingridient in this.Ingridients)
             {
                 newCb.Items.Add(new ComboBoxItem() { Content = ingridient.Name });
             }
+
+            Label newLbl = SetNewIngridientGridRowTextBox(newGrid);
+            newGrid.Children.Add(newLbl);
+
+
+            newCb.SelectionChanged += (o, ev) =>
+            {
+                SetDynamicallyCreatedTextboxValue(o, ev);
+            };
+
+            newGrid.Children.Add(newCb);
+
+
         }
 
         private void Cb_New_Recipe_Ing_1_Selected(object sender, RoutedEventArgs e)
@@ -233,7 +244,81 @@ namespace AlizaFoodCost
             ComboBoxItem selectedFirstItem = (ComboBoxItem)senderCb.SelectedItem;
             string ingridientValue = (string)selectedFirstItem.Content;
             Ingridient ingridient = Ingridients.FirstOrDefault(i => i.Name == ingridientValue);
-            Lbl_New_Recipe_Ingridient_Amount_Name.Content = MeasurmentUnitHeb.GetUnitHebrewValue(ingridient.MeasurmentUnit);
+            Lbl_New_Recipe_Ingridient_1_Amount_Name.Content = MeasurmentUnitHeb.GetUnitHebrewValue(ingridient.MeasurmentUnit);
+        }
+
+        private void SetDynamicallyCreatedTextboxValue(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox senderCb = (ComboBox)sender;
+            int cbNum = int.Parse(senderCb.Name.Split('_')[4]);
+            ComboBoxItem selectedFirstItem = (ComboBoxItem)senderCb.SelectedItem;
+            string ingridientValue = (string)selectedFirstItem.Content;
+            Ingridient ingridient = Ingridients.FirstOrDefault(i => i.Name == ingridientValue);
+
+            Label lbl = new Label();
+
+            foreach (var grid in Grid_New_Recipe_Ingridients.Children)
+            {
+                if ((grid as Grid).Name.Contains(cbNum.ToString()))
+                {
+                    foreach (var child in (grid as Grid).Children)
+                    {
+                        if (child.GetType() == typeof(Label))
+                        {
+                            if ((child as Label).Name.Contains(cbNum.ToString()))
+                            {
+                                lbl = child as Label;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            lbl.Content = MeasurmentUnitHeb.GetUnitHebrewValue(ingridient.MeasurmentUnit);
+        }
+
+        private Label SetNewIngridientGridRowTextBox(Grid newGrid)
+        {
+            TextBox newTb = new TextBox()
+            {
+                Name = $"Tb_New_Recipe_Ingridient_{Grid_New_Recipe_Ingridients.Children.Count}_Amount",
+                FontSize = 25,
+                Margin = new Thickness(0, 0, -290, 0),
+                Height = 40,
+                Width = 50
+            };
+            newGrid.Children.Add(newTb);
+
+            Label newLbl = new Label()
+            {
+                Height = 50,
+                Width = 100,
+                Name = $"Lbl_New_Recipe_Ingridient_{Grid_New_Recipe_Ingridients.Children.Count}_Amount_Name",
+                Margin = new Thickness(0, 0, -500, 0),
+                FontSize = 25
+            };
+            return newLbl;
+        }
+
+        private Grid SetNewIngridientGridRow()
+        {
+            CurrentThickness = (Grid_New_Recipe_Ingridients.Children[Grid_New_Recipe_Ingridients.Children.Count - 1] as Grid).Margin;
+            CurrentThickness.Bottom -= 60;
+            CurrentThickness.Top += 60;
+            CurrentThickness.Right = 890;
+            int newGridNum = Grid_New_Recipe_Ingridients.Children.Count + 1;
+            Grid newGrid = new Grid()
+            {
+                Width = 204,
+                Height = 40,
+                Margin = CurrentThickness,
+                Name = "Grid_Ing_" + newGridNum
+            };
+            newGrid.FlowDirection = FlowDirection.RightToLeft;
+
+            Grid_New_Recipe_Ingridients.Children.Add(newGrid);
+            return newGrid;
         }
     }
 }

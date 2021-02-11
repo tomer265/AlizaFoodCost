@@ -235,6 +235,12 @@ namespace AlizaFoodCost
 
             newGrid.Children.Add(newCb);
 
+            if (Grid_New_Recipe_Ingridients.Children.Count > 5)
+            {
+                Grid_New_Recipe_Ingridients.Height += 60;
+            }
+
+            Sv_Ing.ScrollToBottom();
 
         }
 
@@ -296,7 +302,7 @@ namespace AlizaFoodCost
                 Width = 100,
                 Name = $"Lbl_New_Recipe_Ingridient_{Grid_New_Recipe_Ingridients.Children.Count}_Amount_Name",
                 Margin = new Thickness(0, 0, -500, 0),
-                FontSize = 25
+                FontSize = 20
             };
             return newLbl;
         }
@@ -313,7 +319,8 @@ namespace AlizaFoodCost
                 Width = 204,
                 Height = 40,
                 Margin = CurrentThickness,
-                Name = "Grid_Ing_" + newGridNum
+                Name = "Grid_Ing_" + newGridNum,
+                VerticalAlignment = VerticalAlignment.Top
             };
             newGrid.FlowDirection = FlowDirection.RightToLeft;
 

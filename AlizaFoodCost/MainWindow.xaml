@@ -106,13 +106,16 @@
             <Grid x:Name="Grid_New_Recipe_View" Visibility="Visible" HorizontalAlignment="Left" Height="500" Width="1146" Margin="48,56,0,53" Grid.Row="1">
                 <Label Height="40" FontSize="20" Margin="10,0,10,460" x:Name="Lbl_New_Recipe_Step_2">מתכון בדיקה</Label>
                 <Button Click="AddIngridientRow" FontSize="13" Foreground="White" Background="#008943" Margin="10,66,959,400">הוספת רכיב למתכון +</Button>
-                <ScrollViewer Height="372" x:Name="Sv_Ing" VerticalAlignment="Top" VerticalScrollBarVisibility="Auto" Margin="0,128,0,0">
-                    <Grid x:Name="Grid_New_Recipe_Ingridients" Height="372" VerticalAlignment="Top">
-                        <Grid Height="40" x:Name="Grid_Ing_1" Margin="10,27,0,299" VerticalAlignment="Top">
-                            <ComboBox ScrollViewer.VerticalScrollBarVisibility="Visible" FontSize="25" BorderBrush="ForestGreen" x:Name="Cb_New_Recipe_Ing_1" SelectionChanged="Cb_New_Recipe_Ing_1_Selected" Width="204" Height="40" Margin="20,0,911.6,0">
+                <Grid HorizontalAlignment="Right" Height="372" VerticalAlignment="Bottom" Width="320" x:Name="Grid_Food_Cost">
+                    <Label Height="40" FontSize="20" x:Name="Tb_FoodCost" VerticalAlignment="Top"></Label>
+                </Grid>
+                <ScrollViewer Height="372" Width="820" HorizontalAlignment="Left" x:Name="Sv_Ing" VerticalAlignment="Top" VerticalScrollBarVisibility="Auto" Margin="0,128,0,0">
+                    <Grid x:Name="Grid_New_Recipe_Ingridients" HorizontalAlignment="Left" Height="372" VerticalAlignment="Top">
+                        <Grid Height="40" x:Name="Grid_Ing_1" Margin="0,27,0,0" VerticalAlignment="Top">
+                            <ComboBox ScrollViewer.VerticalScrollBarVisibility="Visible" FontSize="25" BorderBrush="ForestGreen" x:Name="Cb_New_Recipe_Ing_1" SelectionChanged="Cb_New_Recipe_Ing_1_Selected" Width="204" Height="40" Margin="5,0,591,0">
                             </ComboBox>
-                            <TextBox FontSize="25" x:Name="Tb_New_Recipe_Ingridient_1_Amount" Height="40" Margin="0,0,600,0" Width="50"></TextBox>
-                            <Label FontSize="20" Width="100" x:Name="Lbl_New_Recipe_Ingridient_1_Amount_Name" Margin="321,0,715,0"/>
+                            <TextBox LostFocus="Tb_New_Recipe_Ingridient_1_Amount_LostFocus" FontSize="25" x:Name="Tb_New_Recipe_Ingridient_1_Amount" Height="40" Margin="235,0,515,0" Width="50"></TextBox>
+                            <Label FontSize="20" Width="100" x:Name="Lbl_New_Recipe_Ingridient_1_Amount_Name" Margin="300,0,374,0"/>
                         </Grid>
                     </Grid>
                 </ScrollViewer>

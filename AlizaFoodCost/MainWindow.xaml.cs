@@ -24,14 +24,17 @@ namespace AlizaFoodCost
     public partial class MainWindow : Window
     {
         public List<Ingridient> Ingridients = new List<Ingridient>();
+        string SelectedIngridientImagePath = string.Empty;
+        string SelectedRecipeImagePath = string.Empty;
+        decimal TotalRecipeCost = 0;
+        Recipe CurrentRecipe = new Recipe();
+        Thickness CurrentThickness = new Thickness();
+
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        string SelectedIngridientImagePath = string.Empty;
-        string SelectedRecipeImagePath = string.Empty;
-        Thickness CurrentThickness = new Thickness();
         private void Btn_Exit_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
@@ -150,6 +153,7 @@ namespace AlizaFoodCost
             Grid_Recipes_Menu.Visibility = Visibility.Hidden;
             Grid_New_Recipe_View.Visibility = Visibility.Hidden;
             Grid_New_Recipe.Visibility = Visibility.Hidden;
+            Grid_Food_Cost.Visibility = Visibility.Hidden;
             foreach (Grid gridToShow in gridsToShow)
             {
                 gridToShow.Visibility = Visibility.Visible;
@@ -200,13 +204,34 @@ namespace AlizaFoodCost
 
         private void Btn_Add_Recipe_Step_2_Click(object sender, RoutedEventArgs e)
         {
-            HideAllGridsButSelected(Grid_New_Recipe_View);
-            Lbl_New_Recipe_Step_2.Content = $"עריכת מתכון חדש: {Tb_New_Recipe_Name.Text} לפי תמחור של {Tb_New_Recipe_Requested_Price.Text} שקלים ליחידה.";
+            CurrentRecipe.Name = Tb_New_Recipe_Name.Text;
+            try
+            {
+                CurrentRecipe.PricePerUnit = decimal.Parse(Tb_New_Recipe_Requested_Price.Text);
+            }
+            catch
+            {
+                ShowWrongNumericValue();
+                return;
+            }
+
+            HideAllGridsButSelected(Grid_New_Recipe_View, Grid_Food_Cost);
+            Lbl_New_Recipe_Step_2.Content = $"עריכת מתכון חדש: {CurrentRecipe.Name} לפי תמחור של {CurrentRecipe.PricePerUnit} שקלים ליחידה.";
             Ingridients = Functions.GetIngridientsList();
             foreach (Ingridient ingridient in this.Ingridients)
             {
                 Cb_New_Recipe_Ing_1.Items.Add(new ComboBoxItem() { Content = ingridient.Name });
             }
+        }
+
+        private void ShowWrongNumericValue()
+        {
+            MessageBox.Show("יש להזין מספר עשרוני בלבד בשדה המחיר המבוקש למתכון.",
+                    "תקלה - ערך מספרי שגוי",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error,
+                    MessageBoxResult.OK,
+                    MessageBoxOptions.RightAlign);
         }
 
         private void AddIngridientRow(object sender, RoutedEventArgs e)
@@ -290,9 +315,13 @@ namespace AlizaFoodCost
             {
                 Name = $"Tb_New_Recipe_Ingridient_{Grid_New_Recipe_Ingridients.Children.Count}_Amount",
                 FontSize = 25,
-                Margin = new Thickness(0, 0, -290, 0),
+                Margin = new Thickness(112.5, 0, -198, 0),
                 Height = 40,
                 Width = 50
+            };
+            newTb.LostFocus += (o, ev) =>
+            {
+                UpdateFoodCostLabel();
             };
             newGrid.Children.Add(newTb);
 
@@ -301,7 +330,7 @@ namespace AlizaFoodCost
                 Height = 50,
                 Width = 100,
                 Name = $"Lbl_New_Recipe_Ingridient_{Grid_New_Recipe_Ingridients.Children.Count}_Amount_Name",
-                Margin = new Thickness(0, 0, -500, 0),
+                Margin = new Thickness(145, 0, -374, 0),
                 FontSize = 20
             };
             return newLbl;
@@ -312,7 +341,7 @@ namespace AlizaFoodCost
             CurrentThickness = (Grid_New_Recipe_Ingridients.Children[Grid_New_Recipe_Ingridients.Children.Count - 1] as Grid).Margin;
             CurrentThickness.Bottom -= 60;
             CurrentThickness.Top += 60;
-            CurrentThickness.Right = 890;
+            CurrentThickness.Right = 591;
             int newGridNum = Grid_New_Recipe_Ingridients.Children.Count + 1;
             Grid newGrid = new Grid()
             {
@@ -326,6 +355,67 @@ namespace AlizaFoodCost
 
             Grid_New_Recipe_Ingridients.Children.Add(newGrid);
             return newGrid;
+        }
+
+        private void UpdateFoodCostLabel()
+        {
+            UIElementCollection ingridientsGrid = Grid_New_Recipe_Ingridients.Children;
+
+            foreach (Grid grid in ingridientsGrid)
+            {
+                Ingridient ingridientToCalculate = new Ingridient();
+                IngridientUsage ingridientUsage = new IngridientUsage();
+                foreach (object element in grid.Children)
+                {
+                    if (element is ComboBox)
+                    {
+                        ComboBoxItem selectedFirstItem = (element as ComboBox).SelectedItem as ComboBoxItem;
+                        if (selectedFirstItem != null)
+                        {
+                            string ingridientValue = (string)selectedFirstItem.Content;
+                            ingridientToCalculate = Ingridients.FirstOrDefault(i => i.Name == ingridientValue);
+                            ingridientUsage.Ingridient = ingridientToCalculate;
+                        }
+                    }
+
+                    else if (element is TextBox)
+                    {
+                        try
+                        {
+                            if (!string.IsNullOrEmpty((element as TextBox).Text))
+                            {
+                                decimal ingridientUsageAmount = decimal.Parse((element as TextBox).Text);
+                                ingridientUsage.Usage = ingridientUsageAmount;
+                            }
+                        }
+                        catch
+                        {
+                            ShowWrongNumericValue();
+                            return;
+                        }
+                    }
+
+                    else if (element is Label)
+                    {
+                        continue;
+                    }
+                }
+                CurrentRecipe.Ingridients.Add(ingridientUsage);
+            }
+
+            decimal usagePrice = 0;
+
+            foreach (IngridientUsage ingridient in CurrentRecipe.Ingridients)
+            {
+                
+            }
+
+            Tb_FoodCost.Content = "סך הכל עלות מצרכים למתכון: " + CurrentRecipe.Ingridients.Select(i => i.Usage).Sum() + "₪";
+        }
+
+        private void Tb_New_Recipe_Ingridient_1_Amount_LostFocus(object sender, RoutedEventArgs e)
+        {
+            UpdateFoodCostLabel();
         }
     }
 }

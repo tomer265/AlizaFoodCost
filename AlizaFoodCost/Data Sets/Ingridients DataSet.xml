@@ -24,4 +24,12 @@
     <MeasurmentUnit>Unit</MeasurmentUnit>
     <UpsertDate>2021-01-22T01:49:24.0750482+02:00</UpsertDate>
   </Ingridient>
+  <Ingridient>
+    <Id>4</Id>
+    <Name>פטריות כמהין</Name>
+    <ImagePath>../../Images/Ingridients\truffles.jpg</ImagePath>
+    <Price>60</Price>
+    <MeasurmentUnit>HundredGrams</MeasurmentUnit>
+    <UpsertDate>2021-02-12T11:27:02.9115594+02:00</UpsertDate>
+  </Ingridient>
 </ArrayOfIngridient>

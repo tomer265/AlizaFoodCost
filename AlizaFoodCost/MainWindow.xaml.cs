@@ -26,7 +26,6 @@ namespace AlizaFoodCost
         public List<Ingridient> Ingridients = new List<Ingridient>();
         string SelectedIngridientImagePath = string.Empty;
         string SelectedRecipeImagePath = string.Empty;
-        decimal TotalRecipeCost = 0;
         Recipe CurrentRecipe = new Recipe();
         Thickness CurrentThickness = new Thickness();
 
@@ -88,12 +87,12 @@ namespace AlizaFoodCost
 
 
             Ingridients = Functions.GetIngridientsList();
-            if (Ingridients.Select(i => i.Name == newIngridient.Name).Any())
+            if (Ingridients.Where(i => i.Name == newIngridient.Name).Any())
             {
-                MessageBox.Show("כבר קיים מוצר בשם " + newIngridient.Name + ". יש לבחור שם אחר או לערוך את חומר הגלם .הקיים",
+                MessageBox.Show("כבר קיים מוצר בשם " + newIngridient.Name + ". יש לבחור שם אחר או לערוך את חומר הגלם הקיים",
                     "תקלה - מוצר קיים",
                     MessageBoxButton.OK,
-                    MessageBoxImage.Warning,
+                    MessageBoxImage.Error,
                     MessageBoxResult.OK,
                     MessageBoxOptions.RightAlign);
                 return;
@@ -119,9 +118,6 @@ namespace AlizaFoodCost
 
             switch (selectedIngridient.MeasurmentUnit)
             {
-                case MeasurmentUnit.Gram:
-                    Lbl_Update_Selected_Ingridient_Price.Content = MeasurmentUnitHeb.Gram;
-                    break;
                 case MeasurmentUnit.HundredGrams:
                     Lbl_Update_Selected_Ingridient_Price.Content = MeasurmentUnitHeb.HundredGrams;
                     break;
@@ -275,7 +271,7 @@ namespace AlizaFoodCost
             ComboBoxItem selectedFirstItem = (ComboBoxItem)senderCb.SelectedItem;
             string ingridientValue = (string)selectedFirstItem.Content;
             Ingridient ingridient = Ingridients.FirstOrDefault(i => i.Name == ingridientValue);
-            Lbl_New_Recipe_Ingridient_1_Amount_Name.Content = MeasurmentUnitHeb.GetUnitHebrewValue(ingridient.MeasurmentUnit);
+            Lbl_New_Recipe_Ingridient_1_Amount_Name.Content = "מתוך " + MeasurmentUnitHeb.GetUnitHebrewValue(ingridient.MeasurmentUnit);
         }
 
         private void SetDynamicallyCreatedTextboxValue(object sender, SelectionChangedEventArgs e)
@@ -306,7 +302,7 @@ namespace AlizaFoodCost
                 }
             }
 
-            lbl.Content = MeasurmentUnitHeb.GetUnitHebrewValue(ingridient.MeasurmentUnit);
+            lbl.Content = "מתוך " + MeasurmentUnitHeb.GetUnitHebrewValue(ingridient.MeasurmentUnit);
         }
 
         private Label SetNewIngridientGridRowTextBox(Grid newGrid)
@@ -328,9 +324,9 @@ namespace AlizaFoodCost
             Label newLbl = new Label()
             {
                 Height = 50,
-                Width = 100,
+                Width = 200,
                 Name = $"Lbl_New_Recipe_Ingridient_{Grid_New_Recipe_Ingridients.Children.Count}_Amount_Name",
-                Margin = new Thickness(145, 0, -374, 0),
+                Margin = new Thickness(145, 0, -474, 0),
                 FontSize = 20
             };
             return newLbl;
@@ -381,7 +377,7 @@ namespace AlizaFoodCost
                             MessageBox.Show("שים לב! ישנן שורות רכיב ריקות, לא ניתן לחשב את עלות הרכיבים למתכון.",
                             "תקלה - רכיב ריק",
                             MessageBoxButton.OK,
-                            MessageBoxImage.Error,
+                            MessageBoxImage.Warning,
                             MessageBoxResult.OK,
                             MessageBoxOptions.RightAlign);
                             return;
@@ -413,11 +409,37 @@ namespace AlizaFoodCost
                 CurrentRecipe.Ingridients.Add(ingridientUsage);
             }
 
+            if(CurrentRecipe.Ingridients.Count() > 0)
+            {
+                Btn_SaveRecipe.Visibility = Visibility.Visible;
+            }
+
             decimal usagePrice = 0;
 
             foreach (IngridientUsage ingridientUsage in CurrentRecipe.Ingridients)
             {
-                usagePrice += ingridientUsage.Usage * ingridientUsage.Ingridient.Price;
+                switch (ingridientUsage.Ingridient.MeasurmentUnit)
+                {
+                    case MeasurmentUnit.Gram:
+                        usagePrice += (ingridientUsage.Usage * ingridientUsage.Ingridient.Price * (decimal)0.01);
+                        break;
+                    case MeasurmentUnit.HundredGrams:
+                        usagePrice += (ingridientUsage.Usage * ingridientUsage.Ingridient.Price * (decimal)0.01);
+                        break;
+                    case MeasurmentUnit.Kilo:
+                        usagePrice += ingridientUsage.Usage * ingridientUsage.Ingridient.Price;
+                        break;
+                    case MeasurmentUnit.Unit:
+                        usagePrice += ingridientUsage.Usage * ingridientUsage.Ingridient.Price;
+                        break;
+                    case MeasurmentUnit.Liter:
+                        usagePrice += ingridientUsage.Usage * ingridientUsage.Ingridient.Price;
+                        break;
+                    case MeasurmentUnit.Milliliter:
+                        usagePrice += (ingridientUsage.Usage * ingridientUsage.Ingridient.Price * (decimal)0.01);
+                        break;
+                }
+                
             }
 
             Tb_FoodCost.Content = "סך הכל עלות מצרכים למתכון: " + "₪" + usagePrice;

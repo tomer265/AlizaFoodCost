@@ -36,7 +36,7 @@
                     <Canvas Width="25"></Canvas>
                 </StackPanel>
             </Grid>
-            <Grid x:Name="Grid_Welcome" Visibility="Hidden" Height="361" Margin="30,112,26,0" Grid.Row="1" VerticalAlignment="Top" Width="1215">
+            <Grid x:Name="Grid_Welcome" Visibility="Visible" Height="361" Margin="30,112,26,0" Grid.Row="1" VerticalAlignment="Top" Width="1215">
                 <Label FontWeight="Bold" FontSize="30" Foreground="#008943" Margin="371,28,371,277">ברוכים הבאים למחשבון עלות מזון.</Label>
                 <Label FontWeight="Bold" FontSize="30" Foreground="#008943" Margin="155,109,154,194">להתחלה יש לבחור באחת מהאופציות בצד הימני העליון של המסך.</Label>
             </Grid>
@@ -103,12 +103,13 @@
                 </Button>
                 <Image x:Name="Img_New_Recipe" Margin="404,59,73,81" HorizontalAlignment="Center" Width="418"/>
             </Grid>
-            <Grid x:Name="Grid_New_Recipe_View" Visibility="Visible" HorizontalAlignment="Left" Height="500" Width="1146" Margin="48,56,0,53" Grid.Row="1">
+            <Grid x:Name="Grid_New_Recipe_View" Visibility="Hidden" HorizontalAlignment="Left" Height="500" Width="1146" Margin="48,56,0,53" Grid.Row="1">
                 <Label Height="40" FontSize="20" Margin="10,0,10,460" x:Name="Lbl_New_Recipe_Step_2">מתכון בדיקה</Label>
-                <Button Click="AddIngridientRow" FontSize="13" Foreground="White" Background="#008943" Margin="10,66,959,400">הוספת רכיב למתכון +</Button>
+                <Button Cursor="Hand" Click="AddIngridientRow" FontSize="13" Foreground="White" Background="#008943" Margin="10,66,959,400">הוספת רכיב למתכון +</Button>
                 <Grid HorizontalAlignment="Right" Height="372" VerticalAlignment="Bottom" Width="320" x:Name="Grid_Food_Cost">
                     <Label Height="40" FontSize="20" x:Name="Tb_FoodCost" VerticalAlignment="Top"></Label>
                     <Label Height="40" FontSize="17" x:Name="Tb_Revenue" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,58,0,0"></Label>
+                    <Button Height="40" Cursor="Hand" x:Name="Btn_SaveRecipe" Width="100" Margin="40,138,170,194" Background="#008943" Visibility="Hidden" Foreground="White" FontSize="15">שמירת מתכון</Button>
                 </Grid>
                 <ScrollViewer Height="372" Width="820" HorizontalAlignment="Left" x:Name="Sv_Ing" VerticalAlignment="Top" VerticalScrollBarVisibility="Auto" Margin="0,128,0,0">
                     <Grid x:Name="Grid_New_Recipe_Ingridients" HorizontalAlignment="Left" Height="372" VerticalAlignment="Top">
@@ -116,7 +117,7 @@
                             <ComboBox ScrollViewer.VerticalScrollBarVisibility="Visible" FontSize="25" BorderBrush="ForestGreen" x:Name="Cb_New_Recipe_Ing_1" SelectionChanged="Cb_New_Recipe_Ing_1_Selected" Width="204" Height="40" Margin="5,0,591,0">
                             </ComboBox>
                             <TextBox LostFocus="Tb_New_Recipe_Ingridient_1_Amount_LostFocus" FontSize="25" x:Name="Tb_New_Recipe_Ingridient_1_Amount" Height="40" Margin="235,0,515,0" Width="50"></TextBox>
-                            <Label FontSize="20" Width="100" x:Name="Lbl_New_Recipe_Ingridient_1_Amount_Name" Margin="300,0,374,0"/>
+                            <Label FontSize="20" Width="200" x:Name="Lbl_New_Recipe_Ingridient_1_Amount_Name" Margin="300,0,274,0"/>
                         </Grid>
                     </Grid>
                 </ScrollViewer>

@@ -32,14 +32,17 @@ namespace AlizaFoodCost.Logic
                     (newItem as Ingridient).Id = ingridientsList.Count + 1;
                 }
                 ingridientsList.Add(newItem as Ingridient);
-                FileInfo fi = new FileInfo((newItem as Ingridient).ImagePath);
-                string imageName = fi.Name;
-                string imagesFolderPath = CheckCreateSpecificImagesDirectory("Ingridients");
-                if (!File.Exists($"{imagesFolderPath}\\{imageName}"))
+                if (!string.IsNullOrEmpty((newItem as Ingridient).ImagePath))
                 {
-                    File.Copy((newItem as Ingridient).ImagePath, $"{imagesFolderPath}\\{imageName}");
-                }
+                    FileInfo fi = new FileInfo((newItem as Ingridient).ImagePath);
+                    string imageName = fi.Name;
+                    string imagesFolderPath = CheckCreateSpecificImagesDirectory("Ingridients");
+                    if (!File.Exists($"{imagesFolderPath}\\{imageName}"))
+                    {
+                        File.Copy((newItem as Ingridient).ImagePath, $"{imagesFolderPath}\\{imageName}");
+                    }
                 (newItem as Ingridient).ImagePath = Path.Combine(imagesFolderPath, imageName);
+                }
                 CreateUpdateFile<List<Ingridient>>(IngridientsXmlFilePath, ingridientsList);
             }
 

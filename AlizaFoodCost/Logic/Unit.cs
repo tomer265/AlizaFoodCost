@@ -18,7 +18,6 @@ namespace AlizaFoodCost.Logic
 
     public partial class MeasurmentUnitHeb
     {
-        public const string Gram = "מחיר נוכחי לגרם";
         public const string HundredGrams = "מחיר נוכחי למאה גרם";
         public const string Kilo = "מחיר נוכחי לקילו";
         public const string Unit = "מחיר נוכחי ליחידה";
@@ -29,8 +28,6 @@ namespace AlizaFoodCost.Logic
         {
             switch (unit)
             {
-                case MeasurmentUnit.Gram:
-                    return HebMeasurmentValue(Gram);
                 case MeasurmentUnit.HundredGrams:
                     return HebMeasurmentValue(HundredGrams);
                 case MeasurmentUnit.Kilo:

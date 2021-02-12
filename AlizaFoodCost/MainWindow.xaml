@@ -7,7 +7,6 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Background="White" Title="Aliza Food Cost Calculator" FlowDirection="RightToLeft" Height="720" Width="1280">
-    <ScrollViewer>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="80"/>
@@ -125,5 +124,4 @@
             <Label Foreground="#008943" Margin="559,560,437,18" Grid.Row="1">כל הזכויות שמורות לתומר לביא</Label>
             <materialDesign:PackIcon Margin="727,561,0,0" Foreground="#008943" Height="25" Width="25" Kind="Copyright" Grid.Row="1"/>
         </Grid>
-    </ScrollViewer>
 </Window>

@@ -108,6 +108,7 @@
                 <Button Click="AddIngridientRow" FontSize="13" Foreground="White" Background="#008943" Margin="10,66,959,400">הוספת רכיב למתכון +</Button>
                 <Grid HorizontalAlignment="Right" Height="372" VerticalAlignment="Bottom" Width="320" x:Name="Grid_Food_Cost">
                     <Label Height="40" FontSize="20" x:Name="Tb_FoodCost" VerticalAlignment="Top"></Label>
+                    <Label Height="40" FontSize="17" x:Name="Tb_Revenue" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,58,0,0"></Label>
                 </Grid>
                 <ScrollViewer Height="372" Width="820" HorizontalAlignment="Left" x:Name="Sv_Ing" VerticalAlignment="Top" VerticalScrollBarVisibility="Auto" Margin="0,128,0,0">
                     <Grid x:Name="Grid_New_Recipe_Ingridients" HorizontalAlignment="Left" Height="372" VerticalAlignment="Top">

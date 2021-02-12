@@ -4,7 +4,7 @@
     <Id>1</Id>
     <Name>מלפפון ירוק</Name>
     <ImagePath>../../Images/Ingridients/cucumber.png</ImagePath>
-    <Price>6.9</Price>
+    <Price>1</Price>
     <MeasurmentUnit>Kilo</MeasurmentUnit>
     <UpsertDate>2021-01-21T23:20:46.6968812+02:00</UpsertDate>
   </Ingridient>
@@ -12,7 +12,7 @@
     <Id>2</Id>
     <Name>עגבניה</Name>
     <ImagePath>../../Images/Ingridients\tomato.jpg</ImagePath>
-    <Price>10.9</Price>
+    <Price>5</Price>
     <MeasurmentUnit>Kilo</MeasurmentUnit>
     <UpsertDate>2021-01-22T01:33:11.3389764+02:00</UpsertDate>
   </Ingridient>
@@ -20,7 +20,7 @@
     <Id>3</Id>
     <Name>סלסלת פטריות</Name>
     <ImagePath>../../Images/Ingridients\mushrooms.jpg</ImagePath>
-    <Price>5</Price>
+    <Price>10</Price>
     <MeasurmentUnit>Unit</MeasurmentUnit>
     <UpsertDate>2021-01-22T01:49:24.0750482+02:00</UpsertDate>
   </Ingridient>

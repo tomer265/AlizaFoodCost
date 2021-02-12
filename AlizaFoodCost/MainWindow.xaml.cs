@@ -360,7 +360,7 @@ namespace AlizaFoodCost
         private void UpdateFoodCostLabel()
         {
             UIElementCollection ingridientsGrid = Grid_New_Recipe_Ingridients.Children;
-
+            CurrentRecipe.Ingridients = new List<IngridientUsage>();
             foreach (Grid grid in ingridientsGrid)
             {
                 Ingridient ingridientToCalculate = new Ingridient();
@@ -375,6 +375,16 @@ namespace AlizaFoodCost
                             string ingridientValue = (string)selectedFirstItem.Content;
                             ingridientToCalculate = Ingridients.FirstOrDefault(i => i.Name == ingridientValue);
                             ingridientUsage.Ingridient = ingridientToCalculate;
+                        }
+                        else
+                        {
+                            MessageBox.Show("שים לב! ישנן שורות רכיב ריקות, לא ניתן לחשב את עלות הרכיבים למתכון.",
+                            "תקלה - רכיב ריק",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Error,
+                            MessageBoxResult.OK,
+                            MessageBoxOptions.RightAlign);
+                            return;
                         }
                     }
 
@@ -405,12 +415,36 @@ namespace AlizaFoodCost
 
             decimal usagePrice = 0;
 
-            foreach (IngridientUsage ingridient in CurrentRecipe.Ingridients)
+            foreach (IngridientUsage ingridientUsage in CurrentRecipe.Ingridients)
             {
-                
+                usagePrice += ingridientUsage.Usage * ingridientUsage.Ingridient.Price;
             }
 
-            Tb_FoodCost.Content = "סך הכל עלות מצרכים למתכון: " + CurrentRecipe.Ingridients.Select(i => i.Usage).Sum() + "₪";
+            Tb_FoodCost.Content = "סך הכל עלות מצרכים למתכון: " + "₪" + usagePrice;
+
+            if (usagePrice > CurrentRecipe.PricePerUnit)
+            {
+                MessageBox.Show("שים לב! עלות המצרכים עוברת את עלות המתכון.",
+                            "אזהרה - חריגה מעלות המתכון",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Error,
+                            MessageBoxResult.OK,
+                            MessageBoxOptions.RightAlign);
+
+                Tb_Revenue.Foreground = Brushes.Red;
+                Tb_Revenue.Content = $"יצור המתכון גורע הפסד של {Math.Abs(CurrentRecipe.PricePerUnit - usagePrice)} שקלים";
+
+            }
+            else if (usagePrice == CurrentRecipe.PricePerUnit)
+            {
+                Tb_Revenue.Foreground = Brushes.Orange;
+                Tb_Revenue.Content = "יצור המתכון זהה לעלות מצרכיו.";
+            }
+            else
+            {
+                Tb_Revenue.Foreground = Brushes.ForestGreen;
+                Tb_Revenue.Content = $"יצור המתכון מניב רווח של {Math.Abs(CurrentRecipe.PricePerUnit - usagePrice)} שקלים";
+            }
         }
 
         private void Tb_New_Recipe_Ingridient_1_Amount_LostFocus(object sender, RoutedEventArgs e)
